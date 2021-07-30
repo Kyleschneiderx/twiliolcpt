@@ -11,7 +11,6 @@ app.use(urlencoded({ extended: false }));
 // HTTP POST to /voice in our application
 app.post('/voice', (req, response) => {
   // Use the Twilio Node.js SDK to build an XML response
-  console.log(req.body.From)
 
 //  '<Response><Say>Hi Greg this is an automated phone message from Lake City Physical Therapy just letting you know that you have an open balance. Please at your earliest convience give our  billing department a call at 208-667-1988 or visit our website at lake-city-pt.com and navigate to the patient payment portal. If this information seems incorrect please contact us to resolve the matter, Thank You</Say></Response>'
   const twiml = new VoiceResponse();
@@ -23,9 +22,8 @@ app.post('/voice', (req, response) => {
 });
 
 // Create an HTTP server and listen for requests on port 3000
-app.listen(8080, () => {
-  console.log(
-    'Now listening on port 3000. ' +
-    'Be sure to restart when you make code changes!'
-  );
-});
+const port = process.env.PORT || 8080
+
+app.listen(port, () =>{
+    console.log('SERVER RUNNING', port)
+})
