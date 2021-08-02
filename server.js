@@ -31,16 +31,18 @@ app.post('/voice', (req, response) => {
   const VoiceResponse = require('twilio').twiml.VoiceResponse;
 //  '<Response><Say>Hi Greg this is an automated phone message from Lake City Physical Therapy just letting you know that you have an open balance. Please at your earliest convience give our  billing department a call at 208-667-1988 or visit our website at lake-city-pt.com and navigate to the patient payment portal. If this information seems incorrect please contact us to resolve the matter, Thank You</Say></Response>'
   // const twiml = new VoiceResponse();
-  const response = new VoiceResponse();
+  const twiml = new VoiceResponse();
 
-  response.dial('208-818-3015')
-  console.log(response.toString());
+  twiml.say('Hi this is Lake City PTs automated phone service stay on the line and we will connect you with a representative');
+  twiml.dial('+12088183015')
+  twiml.dial('+12088507141')
+  console.log(twiml.toString());
 
   // twiml.say(`Hi Kyle this is an automated phone message from Lake City Physical Therapy just letting you know that you have an outstanding balance. Please at your earliest convience give our  billing department a call at 208-667-1988 or visit our website at lake-city-pt.com and navigate to the patient payment portal. If this information seems incorrect please contact us to resolve the matter, Thank You and have a nice day.`);
 
   // // Render the response as XML in reply to the webhook request
-  // response.type('text/xml');
-  // response.send(twiml.toString());
+  response.type('text/xml');
+  response.send(twiml.toString());
 });
 
 
