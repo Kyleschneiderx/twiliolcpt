@@ -15,6 +15,6 @@ const patientSchema = mongoose.Schema({
 
 },{timestamps:true})
 
-const Patient = mongoose.model('patient', designSchema)
+const Patient = mongoose.model('patient', patientSchema)
 
 module.exports = {Patient}
