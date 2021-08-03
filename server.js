@@ -37,7 +37,7 @@ app.post('/voice', (req, response) => {
       dial.number(process.env.PHONE_ONE)
       dial.number(process.env.PHONE_TWO)
       dial.number(process.env.PHONE_THREE)
-      dial.number(process.env.TEXT_NUMBER)
+      dial.number(process.env.TEST_NUMBER)
       response.type('text/xml');
       response.send(twiml.toString())
       console.log(twiml.toString());
