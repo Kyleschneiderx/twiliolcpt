@@ -7,6 +7,7 @@ const {Patient} = require('./patient')
 require('dotenv').config()
 
 
+
 // O5ZO2nHPj09LAkO3
 
 mongoose.connect(process.env.MONGO_URI,{
@@ -81,6 +82,25 @@ app.post('/add', (req, res)=>{
       })
   })
 
+})
+
+
+app.post('/sms', (req, res)=>{
+  const MessagingResponse = require('twilio').twiml.MessagingResponse;
+  console.log(req.body.Body)
+  const twiml = new MessagingResponse();
+  const reply = req.body.Body.toLowerCase()
+  if(reply === 'remove'){
+    console.log('Please remove patient')
+    twiml.message('You were removed from the referral list');
+    res.writeHead(200, {'Content-Type': 'text/xml'});
+    res.end(twiml.toString());
+  }else{
+    console.log('checkingOpenTimes')
+    twiml.message('That is not a command I understand please give us a call at 208-667-1988 if you need help resolving any questions?');
+    res.writeHead(200, {'Content-Type': 'text/xml'});
+    res.end(twiml.toString());
+  }
 })
 
 
