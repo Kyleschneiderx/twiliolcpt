@@ -1,7 +1,7 @@
 const express = require('express');
 const VoiceResponse = require('twilio').twiml.VoiceResponse;
 const urlencoded = require('body-parser').urlencoded;
-const mongoose = require('mongoose')
+// const mongoose = require('mongoose')
 const app = express();
 const {Patient} = require('./patient')
 require('dotenv').config()
@@ -10,12 +10,12 @@ require('dotenv').config()
 
 // O5ZO2nHPj09LAkO3
 
-mongoose.connect(process.env.MONGO_URI,{
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-  useFindAndModify: false
-});
+// mongoose.connect(process.env.MONGO_URI,{
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+//   useCreateIndex: true,
+//   useFindAndModify: false
+// });
 
 // Parse incoming POST params with Express middleware
 app.use(urlencoded({ extended: false }));
@@ -28,40 +28,53 @@ app.use(express.json({
 // HTTP POST to /voice in our application
 app.post('/voice', (req, response) => {
 
-  Patient.find({"number": `${req.body.Caller}`})
-  .then(res =>{
-    if(res.length === 0){
-      const VoiceResponse = require('twilio').twiml.VoiceResponse;
-      const twiml = new VoiceResponse();
-      twiml.say(`Hi this is Lake City PT billing departments automated phone service please stay on the line and we will try an connect you with a representative. If we cannot connect you with a representative please leave us a message and we'll get back to you as soon as possible, or go to lake-city-pt.com to find out more information. Thank You`);
-      const dial = twiml.dial();
-      dial.number(process.env.PHONE_ONE)
-      dial.number(process.env.PHONE_TWO)
-      dial.number(process.env.PHONE_THREE)
-      dial.number(process.env.TEST_NUMBER)
-      response.type('text/xml');
-      response.send(twiml.toString())
-      console.log(twiml.toString());
-    }else{
-      console.log(res[0].name)
-      const VoiceResponse = require('twilio').twiml.VoiceResponse;
-      const twiml = new VoiceResponse();
-      twiml.say(`Hi ${res[0].name} thank you for giving us a callback, This is Lake City Physical Therapy billing departments automated phone service please stay on the line and we will try an connect you with a representative. If we cannot connect you with a representative please leave us a message and we'll get back to you as soon as possible. Thank You`);
-      const dial = twiml.dial();
-      dial.number(process.env.PHONE_ONE)
-      dial.number(process.env.PHONE_TWO)
-      dial.number(process.env.PHONE_THREE)
-      dial.number(process.env.TEXT_NUMBER)
-      response.type('text/xml');
-      response.send(twiml.toString())
-      console.log(twiml.toString());
-    }
+
+  const VoiceResponse = require('twilio').twiml.VoiceResponse;
+  const twiml = new VoiceResponse();
+  twiml.say(`Hi this is Lake City PT billing departments automated phone service please stay on the line and we will try an connect you with a representative. If we cannot connect you with a representative please leave us a message and we'll get back to you as soon as possible, or go to lake-city-pt.com to find out more information. Thank You`);
+  const dial = twiml.dial();
+  dial.number(process.env.PHONE_ONE)
+  dial.number(process.env.PHONE_TWO)
+  dial.number(process.env.PHONE_THREE)
+  dial.number(process.env.TEST_NUMBER)
+  response.type('text/xml');
+  response.send(twiml.toString())
+  console.log(twiml.toString());
+
+  // Patient.find({"number": `${req.body.Caller}`})
+  // .then(res =>{
+  //   if(res.length === 0){
+  //     const VoiceResponse = require('twilio').twiml.VoiceResponse;
+  //     const twiml = new VoiceResponse();
+  //     twiml.say(`Hi this is Lake City PT billing departments automated phone service please stay on the line and we will try an connect you with a representative. If we cannot connect you with a representative please leave us a message and we'll get back to you as soon as possible, or go to lake-city-pt.com to find out more information. Thank You`);
+  //     const dial = twiml.dial();
+  //     dial.number(process.env.PHONE_ONE)
+  //     dial.number(process.env.PHONE_TWO)
+  //     dial.number(process.env.PHONE_THREE)
+  //     dial.number(process.env.TEST_NUMBER)
+  //     response.type('text/xml');
+  //     response.send(twiml.toString())
+  //     console.log(twiml.toString());
+  //   }else{
+  //     console.log(res[0].name)
+  //     const VoiceResponse = require('twilio').twiml.VoiceResponse;
+  //     const twiml = new VoiceResponse();
+  //     twiml.say(`Hi ${res[0].name} thank you for giving us a callback, This is Lake City Physical Therapy billing departments automated phone service please stay on the line and we will try an connect you with a representative. If we cannot connect you with a representative please leave us a message and we'll get back to you as soon as possible. Thank You`);
+  //     const dial = twiml.dial();
+  //     dial.number(process.env.PHONE_ONE)
+  //     dial.number(process.env.PHONE_TWO)
+  //     dial.number(process.env.PHONE_THREE)
+  //     dial.number(process.env.TEXT_NUMBER)
+  //     response.type('text/xml');
+  //     response.send(twiml.toString())
+  //     console.log(twiml.toString());
+  //   }
 
 
-  })
-  .catch((err)=>{
-    console.log(err)
-  })
+  // })
+  // .catch((err)=>{
+  //   console.log(err)
+  // })
 
 });
 
